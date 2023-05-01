@@ -13,3 +13,5 @@ Face recognition lib data "shape_predictor_68_face_landmarks.dat" could be downl
 https://github.com/davisking/dlib-models/blob/master/shape_predictor_68_face_landmarks.dat.bz2
 
 P.S. This repo code is totally free to use
+
+I'm goint to make a video with all details explanation. Anounce is here: https://www.youtube.com/watch?v=sOZnUHJcaUY
