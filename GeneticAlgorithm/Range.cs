@@ -1,4 +1,4 @@
-namespace DrawStringGeneticAlgorithm
+namespace StringArt.GeneticAlgorithm
 {
     public record Range(int From, int To)
     {

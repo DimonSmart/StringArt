@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace GeneticAlgorithm
+namespace StringArt.GeneticAlgorithm
 {
     [DebuggerDisplay("Score = {Score}")]
 

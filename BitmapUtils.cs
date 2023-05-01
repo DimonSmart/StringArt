@@ -22,11 +22,11 @@ namespace StringArt
 
         public static SKBitmap Resize(SKBitmap source, int width, int height)
         {
-            SKBitmap newBitmap = new SKBitmap(width, height, SKColorType.Gray8, SKAlphaType.Opaque);
+            var newBitmap = new SKBitmap(width, height, SKColorType.Gray8, SKAlphaType.Opaque);
 
             source.Resize(new SKImageInfo(width, height, SKColorType.Gray8), SKFilterQuality.Medium);
 
-            using (SKCanvas canvas = new SKCanvas(newBitmap))
+            using (var canvas = new SKCanvas(newBitmap))
             {
                 canvas.DrawBitmap(source, SKRect.Create(width, height));
             }

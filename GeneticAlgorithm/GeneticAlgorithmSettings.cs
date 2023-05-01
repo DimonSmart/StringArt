@@ -1,7 +1,8 @@
 using System.Runtime.Serialization;
 using System.Text;
+using Range = StringArt.GeneticAlgorithm.Range;
 
-namespace DrawStringGeneticAlgorithm
+namespace StringArt.GeneticAlgorithm
 {
     [DataContract]
     [KnownType(typeof(ScoreStrategy))]
@@ -10,10 +11,10 @@ namespace DrawStringGeneticAlgorithm
         public enum ScoreStrategy
         {
             Parallel,
-            Sequental
+            Sequential
         }
 
-        public ScoreStrategy Strategy { get; set; } = ScoreStrategy.Sequental;
+        public ScoreStrategy Strategy { get; set; } = ScoreStrategy.Sequential;
 
         [DataMember]
         public int BestChromosomes = 50;
@@ -41,7 +42,7 @@ namespace DrawStringGeneticAlgorithm
         [DataMember]
         public int Population = 100;
         public Range PopulationRange => new(0, Population);
-        public Range NewChromosomesRange => new Range(Population - NewChromosomes, Population);
+        public Range NewChromosomesRange => new(Population - NewChromosomes, Population);
         public Range MutationChromosomesRange => NewChromosomesRange - MutationChromosomes;
 
         // NB! Update in case of add remove specialized range

@@ -25,7 +25,6 @@ namespace DrawStringGeneticAlgorithm
             };
         }
 
-
         public void Solve(SKBitmap etalon, SKBitmap coefficients)
         {
             var bestPair = (0, 1);

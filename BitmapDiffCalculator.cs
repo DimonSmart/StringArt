@@ -45,7 +45,7 @@ namespace StringArt
             // Get the pixel spans for the bitmaps
             ReadOnlySpan<byte> pixels1 = bitmap1.Bytes;
             ReadOnlySpan<byte> pixels2 = bitmap2.Bytes;
-            ReadOnlySpan<byte> coeff = coefficients?.Bytes;
+            ReadOnlySpan<byte> coeffs = coefficients?.Bytes;
 
             // Calculate the sum of absolute differences between the grayscale values of each pixel
             int sum = 0;
@@ -55,7 +55,7 @@ namespace StringArt
                 byte value2 = pixels2[i];
 
                 int difference = Math.Abs(value1 - value2);
-                difference = ScaleDown(difference, coeff[i]);
+                difference = ScaleDown(difference, coeffs[i]);
                 sum += difference;
             }
 
@@ -70,23 +70,7 @@ namespace StringArt
 
         public static int ScaleDown(int initialDifference, int scale)
         {
-            int scaledDifference;
-
-            if (scale == 0)
-            {
-                scaledDifference = initialDifference / 2;
-            }
-            else if (scale == 255)
-            {
-                scaledDifference = initialDifference;
-            }
-            else
-            {
-                scaledDifference = (initialDifference * (scale + 128)) / 255;
-            }
-
-            return scaledDifference;
+            return initialDifference * (scale / 2 + 1);
         }
-
     }
 }

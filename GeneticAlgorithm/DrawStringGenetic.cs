@@ -1,8 +1,7 @@
-using GeneticAlgorithm;
 using StringArt;
 using System.Text;
 
-namespace DrawStringGeneticAlgorithm
+namespace StringArt.GeneticAlgorithm
 {
     public class DrawStringGenetic : Genetic<DrawStringChromosome>
     {

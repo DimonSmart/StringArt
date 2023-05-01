@@ -1,4 +1,4 @@
-﻿namespace GeneticAlgorithm
+﻿namespace StringArt.GeneticAlgorithm
 {
     public interface IFitness<in T>
     {

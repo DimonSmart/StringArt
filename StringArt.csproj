@@ -9,20 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DlibDotNet" Version="19.21.0.20220724" />
     <PackageReference Include="SkiaSharp" Version="2.88.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Face.png">
+    <None Update="Samples\Face.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="HLine.png">
+    <None Update="Samples\HLine.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="pic-main.jpg">
+    <None Update="Samples\pic-main.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="R.jpeg">
+    <None Update="Samples\R.jpeg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="shape_predictor_68_face_landmarks.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="shape_predictor_68_face_landmarks.dat.bz2">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

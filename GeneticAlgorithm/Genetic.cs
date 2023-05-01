@@ -1,11 +1,8 @@
-using GeneticAlgorithm;
-using System.Text;
-
-namespace DrawStringGeneticAlgorithm
+namespace StringArt.GeneticAlgorithm
 {
     public abstract class Genetic<T> where T : IChromosome<T>
     {
-        public enum FitnesDirection
+        public enum FitnessDirection
         {
             HigherIsBetter,
             LowerIsBetter
@@ -21,9 +18,9 @@ namespace DrawStringGeneticAlgorithm
             _chromosomes = new ChromosomeWithScore<T>[_settings.Population];
         }
 
-        public FitnesDirection Direction { get; } = FitnesDirection.LowerIsBetter;
+        public FitnessDirection Direction { get; } = FitnessDirection.LowerIsBetter;
 
-        public int InitialScore => Direction == FitnesDirection.HigherIsBetter ? int.MinValue : int.MaxValue;
+        public int InitialScore => Direction == FitnessDirection.HigherIsBetter ? int.MinValue : int.MaxValue;
 
         public ChromosomeWithScore<T> GetBestResult()
         {
@@ -77,7 +74,7 @@ namespace DrawStringGeneticAlgorithm
 
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            var sb = new System.Text.StringBuilder();
             foreach (var chromosomeWithScore in _chromosomes)
             {
                 sb.AppendFormat("G:{0} S:{1}", chromosomeWithScore.Chromosome, chromosomeWithScore.Score);
@@ -122,10 +119,14 @@ namespace DrawStringGeneticAlgorithm
 
         private void Sort()
         {
-            if (Direction == FitnesDirection.LowerIsBetter)
+            if (Direction == FitnessDirection.LowerIsBetter)
+            {
                 Array.Sort(_chromosomes, (a, b) => a.Score - b.Score);
+            }
             else
+            {
                 Array.Sort(_chromosomes, (a, b) => b.Score - a.Score);
+            }
         }
 
         private void UpdateScore()

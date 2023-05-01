@@ -1,4 +1,4 @@
-﻿using DrawStringGeneticAlgorithm;
+﻿using StringArt.GeneticAlgorithm;
 
 namespace StringArt
 {

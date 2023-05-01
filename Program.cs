@@ -15,13 +15,15 @@
             //};
 
 
-            var images = new[] { "R.jpeg", "pic-main.jpg", "Face.png" };
+            var images = new[] { @"Samples\R.jpeg", @"Samples\pic-main.jpg", @"Samples\Face.png" };
             var stringArtCreator = new StringArtCreator(param);
             stringArtCreator.OnGeneticIteration += (s, e) => { Console.Write("."); };
             stringArtCreator.OnIteration += (int iteration, int score) => Console.WriteLine($"{iteration:000}:{score};");
 
             foreach (var image in images)
             {
+                // var img = BitmapUtils.Load(image);
+                // FaceFeaturesMaskCreator.Create(img);
                 Console.WriteLine($"{Environment.NewLine}{image}");
                 stringArtCreator.Create(image);
             }

@@ -1,4 +1,4 @@
-﻿namespace DrawStringGeneticAlgorithm
+﻿namespace StringArt.GeneticAlgorithm
 {
     public sealed class DrawStringChromosome : IChromosome<DrawStringChromosome>
     {
