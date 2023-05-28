@@ -15,7 +15,7 @@
             //};
 
 
-            var images = new[] { @"Samples\R.jpeg", @"Samples\pic-main.jpg", @"Samples\Face.png" };
+            var images = new[] { @"Samples\Queen Elizabeth.png", @"Samples\R.jpeg", @"Samples\pic-main.jpg", @"Samples\Face.png" };
             var stringArtCreator = new StringArtCreator(param);
             stringArtCreator.OnGeneticIteration += (s, e) => { Console.Write("."); };
             stringArtCreator.OnIteration += (int iteration, int score) => Console.WriteLine($"{iteration:000}:{score};");

@@ -1,10 +1,11 @@
 ﻿using DlibDotNet;
 using SkiaSharp;
+using System.Drawing;
 using static StringArt.ScoreMasks.FacePart;
 
 namespace StringArt.ScoreMasks;
 
-public class FaceFeaturesMaskCreator : IScoreMaskCreator
+public class FaceFeaturesScoreMaskCreator : IScoreMaskCreator
 {
     public static SKBitmap CreateMask(SKBitmap sourceBitmap)
     {
@@ -34,14 +35,16 @@ public class FaceFeaturesMaskCreator : IScoreMaskCreator
             var faces = fd.Operator(img);
             foreach (var face in faces)
             {
+                maskPaint.Color = SKColors.White;
                 maskPaint.StrokeWidth = face.Width / 10;
                 FullObjectDetection shape = sp.Detect(img, face);
-                DrawFaceParts(maskPaint, canvas, shape,
-                    new List<FacePart> { Jawline, RightEyebrow, LeftEyebrow, NoseBridge, NoseTip, RightEye, LeftEye, LipsOuterEdge, LipsInnerEdge });
+                DrawFaceParts(maskPaint, canvas, shape, new List<FacePart> { /* Jawline, */ RightEyebrow, LeftEyebrow, NoseBridge, NoseTip, RightEye, LeftEye, LipsOuterEdge, LipsInnerEdge });
+                maskPaint.Color = SKColors.Gray;
+                maskPaint.StrokeWidth = face.Width / 20;
+                DrawFaceParts(maskPaint, canvas, shape, new List<FacePart> { Jawline });
             }
         }
-        BitmapUtils.Save(bitmap, Path.GetFileNameWithoutExtension("xx") + "_FaceMask.jpg");
-        Dlib.SaveJpeg(img, Path.GetFileNameWithoutExtension("xx") + "_FaceLineMarks.jpg");
+
         return bitmap;
     }
 

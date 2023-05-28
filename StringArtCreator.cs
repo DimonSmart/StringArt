@@ -1,4 +1,5 @@
 ﻿using StringArt.GeneticAlgorithm;
+using StringArt.ScoreMasks;
 
 namespace StringArt
 {
@@ -18,7 +19,11 @@ namespace StringArt
 
         public void Create(string imageFileName)
         {
-            var drawStringGeneticCalculator = new DrawStringFitness(_drawStringParameters, BitmapUtils.Load(imageFileName));
+            var etalon = BitmapUtils.Resize(BitmapUtils.Load(imageFileName), _drawStringParameters.Width, _drawStringParameters.Height);
+            var mask = new FaceFeaturesScoreMaskCreator().Create(etalon);
+            BitmapUtils.Save(mask, Path.GetFileNameWithoutExtension(imageFileName) + "_FaceMask.jpg");
+
+            var drawStringGeneticCalculator = new DrawStringFitness(_drawStringParameters, etalon, mask);
             var genetic = new DrawStringGenetic(
                 drawStringGeneticCalculator,
                  new GeneticAlgorithmSettings()
@@ -33,7 +38,7 @@ namespace StringArt
             int v = 0;
             const int IterationsInTurn = 100;
             const int StopIfNoProgressForXIteration = 3;
-            const int StopIfMaxIterationsReached = 10000;
+            const int StopIfMaxIterationsReached = 100;
             var queue = new Queue<int>();
             var lastResult = genetic.InitialScore;
 

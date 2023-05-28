@@ -1,5 +1,4 @@
 ﻿using SkiaSharp;
-using StringArt.ScoreMasks;
 
 namespace StringArt.GeneticAlgorithm;
 
@@ -9,11 +8,11 @@ public class DrawStringFitness : IFitness<DrawStringChromosome>
     private readonly SKBitmap _coefficients;
     private readonly SKPoint[] _points;
 
-    public DrawStringFitness(DrawStringParameters drawStringParameters, SKBitmap etalon)
+    public DrawStringFitness(DrawStringParameters drawStringParameters, SKBitmap etalon, SKBitmap mask)
     {
         P = drawStringParameters;
         _etalon = BitmapUtils.Resize(etalon, P.Width, P.Height);
-
+        _coefficients = mask;
         _stringLineStyle = new SKPaint()
         {
             IsAntialias = true,
@@ -30,10 +29,6 @@ public class DrawStringFitness : IFitness<DrawStringChromosome>
             float y = P.CenterY + P.Radius * (float)Math.Sin(angle);
             return new SKPoint(x, y);
         }).ToArray();
-
-        // _coefficients = CreateScoreMask();
-        // TODO: Add DI container
-        _coefficients = new FaceFeaturesMaskCreator().Create(_etalon);
     }
 
     public SKBitmap DrawChromosome(DrawStringChromosome chromosome)
