@@ -1,4 +1,7 @@
-﻿namespace StringArt
+﻿using SkiaSharp;
+using StringArt.GeneticAlgorithm;
+
+namespace StringArt
 {
     public class Program
     {
@@ -9,49 +12,19 @@
                 MaxLines = 1500
             };
 
-            //var param = new DrawStringParameters(150, 150, 148, 200)
-            //{
-            //    MaxLines = 500
-            //};
-
-
-            var images = new[] { @"Samples\Queen Elizabeth.png", @"Samples\R.jpeg", @"Samples\pic-main.jpg", @"Samples\Face.png" };
+            var images = new[] { @"Samples\MapleLeaf.jpeg" }; //, @"Samples\Queen Elizabeth.png", @"Samples\R.jpeg", @"Samples\pic-main.jpg", @"Samples\Face.png" };
             var stringArtCreator = new StringArtCreator(param);
-            stringArtCreator.OnGeneticIteration += (s, e) => { Console.Write("."); };
-            stringArtCreator.OnIteration += (int iteration, int score) => Console.WriteLine($"{iteration:000}:{score};");
+            stringArtCreator.OnGeneticIteration += () => { Console.Write("."); };
+            stringArtCreator.OnIteration += (int iteration, string imageFileName, SKBitmap bitmap, ChromosomeWithScore<DrawStringChromosome> ch) => {
+                Console.WriteLine($"{iteration:000}:{ch.Score};");
+                BitmapUtils.Save(bitmap, $"FullFaceMask_{Path.GetFileNameWithoutExtension(imageFileName)} {iteration:000} ({ch.Score}).png");
+            };
 
             foreach (var image in images)
             {
-                // var img = BitmapUtils.Load(image);
-                // FaceFeaturesMaskCreator.Create(img);
                 Console.WriteLine($"{Environment.NewLine}{image}");
                 stringArtCreator.Create(image);
             }
-
-            //var etalon = BitmapUtils.Load("Face.png");
-            //etalon = BitmapUtils.Resize(etalon, param.Width, param.Height);
-            //var drawStringCalculator = new DrawStringCalculator(param);
-            //drawStringCalculator.DrawNails(etalon);
-
-            //var workBitmap = drawStringCalculator.GetEmptyBitmap();
-
-            //var bestLine = drawStringCalculator.GetBestLine(etalon, workBitmap);
-            //drawStringCalculator.DrawLine(workBitmap, bestLine.i, bestLine.j);
-            //int i = 0;
-
-            //BitmapUtils.Save(workBitmap, $"{i:000} Start.png");
-
-            //var optionA = drawStringCalculator.GetBestLine(etalon, workBitmap, bestLine.i);
-            //var optionB = drawStringCalculator.GetBestLine(etalon, workBitmap, bestLine.j);
-            //var startPoint = optionA.score < optionB.score ? bestLine.i : bestLine.j;
-
-            //for (int v = 1; v < 1000; v++)
-            //{
-            //    var nextNail = drawStringCalculator.GetBestLine(etalon, workBitmap, startPoint);
-            //    drawStringCalculator.DrawLine(workBitmap, startPoint, nextNail.next);
-            //    startPoint = nextNail.next;
-            //    BitmapUtils.Save(workBitmap, $"{v:000} step.png");
-            //}
         }
     }
 }

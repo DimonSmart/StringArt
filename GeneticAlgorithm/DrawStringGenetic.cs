@@ -1,4 +1,3 @@
-using StringArt;
 using System.Text;
 
 namespace StringArt.GeneticAlgorithm

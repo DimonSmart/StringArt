@@ -27,7 +27,6 @@ namespace DrawStringGeneticAlgorithm
 
         public void Solve(SKBitmap etalon, SKBitmap coefficients)
         {
-            var bestPair = (0, 1);
             var bestResult = int.MaxValue;
             for (int i = 0; i < P.QNails - 1; i++)
             {
@@ -43,7 +42,7 @@ namespace DrawStringGeneticAlgorithm
                     if (diff < bestResult)
                     {
                         bestResult = diff;
-                        bestPair = (i, j);
+                        (int, int) bestPair = (i, j);
                         Console.WriteLine($"Result:{bestResult}, Pair:{bestPair}");
                     }
                 }
@@ -103,8 +102,8 @@ namespace DrawStringGeneticAlgorithm
         private static bool NeihborNails(int startNail, int i)
         {
             return false;
-            var limit = Random.Shared.Next(2, 10);
-            return Math.Abs(i - startNail) < limit;
+            // var limit = Random.Shared.Next(2, 10);
+            // return Math.Abs(i - startNail) < limit;
         }
 
         public void DrawNails(SKBitmap bitmap)

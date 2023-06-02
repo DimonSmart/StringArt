@@ -1,13 +1,25 @@
 ﻿using DlibDotNet;
 using SkiaSharp;
-using System.Drawing;
-using static StringArt.ScoreMasks.FacePart;
 
 namespace StringArt.ScoreMasks;
 
+public record FaceFeatureDescription (int Level, float Width, FacePart FacePart);
+
+public record FaceFeatureSettings(FaceFeatureDescription[] Features);
+
+
 public class FaceFeaturesScoreMaskCreator : IScoreMaskCreator
 {
-    public static SKBitmap CreateMask(SKBitmap sourceBitmap)
+    private readonly FaceFeatureSettings settings;
+
+    public FaceFeaturesScoreMaskCreator(FaceFeatureSettings settings)
+    {
+        //new List<FacePart> { Jawline, RightEyebrow, LeftEyebrow, NoseBridge, NoseTip, RightEye, LeftEye, LipsOuterEdge, LipsInnerEdge });
+        this.settings = settings;
+    }
+
+
+    public static SKBitmap CreateMask(SKBitmap sourceBitmap, FaceFeatureSettings settings)
     {
         SKPaint maskPaint = new()
         {
@@ -23,7 +35,6 @@ public class FaceFeaturesScoreMaskCreator : IScoreMaskCreator
             Color = SKColors.Black
         };
 
-
         byte[] imageData = SKImage.FromBitmap(sourceBitmap).Encode().ToArray();
         var img = Dlib.LoadPng<byte>(imageData);
 
@@ -35,13 +46,13 @@ public class FaceFeaturesScoreMaskCreator : IScoreMaskCreator
             var faces = fd.Operator(img);
             foreach (var face in faces)
             {
-                maskPaint.Color = SKColors.White;
-                maskPaint.StrokeWidth = face.Width / 10;
-                FullObjectDetection shape = sp.Detect(img, face);
-                DrawFaceParts(maskPaint, canvas, shape, new List<FacePart> { /* Jawline, */ RightEyebrow, LeftEyebrow, NoseBridge, NoseTip, RightEye, LeftEye, LipsOuterEdge, LipsInnerEdge });
-                maskPaint.Color = SKColors.Gray;
-                maskPaint.StrokeWidth = face.Width / 20;
-                DrawFaceParts(maskPaint, canvas, shape, new List<FacePart> { Jawline });
+                foreach (var feature in settings.Features)
+                {
+                    FullObjectDetection shape = sp.Detect(img, face);
+                    maskPaint.Color = SKColor.FromHsv(0, 0, feature.Level);
+                    maskPaint.StrokeWidth = face.Width * feature.Width / 100;
+                    DrawFaceParts(maskPaint, canvas, shape, new List<FacePart> { feature.FacePart });
+                }
             }
         }
 
@@ -82,6 +93,6 @@ public class FaceFeaturesScoreMaskCreator : IScoreMaskCreator
 
     public SKBitmap Create(SKBitmap sourceBitmap)
     {
-        return CreateMask(sourceBitmap);
+        return CreateMask(sourceBitmap, settings);
     }
 }
