@@ -3,7 +3,7 @@ using SkiaSharp;
 
 namespace StringArt.ScoreMasks;
 
-public record FaceFeatureDescription (int Level, float Width, FacePart FacePart);
+public record FaceFeatureDescription(int Level, float Width, FacePart FacePart);
 
 public record FaceFeatureSettings(FaceFeatureDescription[] Features);
 

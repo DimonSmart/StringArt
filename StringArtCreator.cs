@@ -82,7 +82,7 @@ namespace StringArt
 
                 using var bitmap = drawStringFitness.DrawChromosome(h.Chromosome);
                 OnIteration?.Invoke(i, imageFileName, bitmap, h);
-                
+
             }
             Console.WriteLine($"{imageFileName} finished");
         }
